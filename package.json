@@ -1,0 +1,30 @@
+{
+  "name": "nodescrappy",
+  "version": "1.0.0",
+  "description": "Web scrappy libs in nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dipankar08/nodescrappy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dipankar08/nodescrappy/issues"
+  },
+  "homepage": "https://github.com/dipankar08/nodescrappy#readme",
+  "dependencies": {
+    "@types/cheerio": "^0.22.13",
+    "cheerio": "^1.0.0-rc.3",
+    "fs": "0.0.1-security",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5",
+    "ts": "^0.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.6"
+  }
+}
