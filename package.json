@@ -1,6 +1,6 @@
 {
   "name": "nodescrappy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Web scrappy libs in nodejs",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,7 @@
   "dependencies": {
     "@types/cheerio": "^0.22.13",
     "cheerio": "^1.0.0-rc.3",
+    "commander": "^4.0.0",
     "fs": "0.0.1-security",
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
@@ -26,5 +27,8 @@
   },
   "devDependencies": {
     "@types/node": "^12.12.6"
+  },
+  "bin": {
+    "nodescrappy": "bin/main.js"
   }
 }

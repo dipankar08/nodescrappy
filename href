@@ -1,0 +1,71 @@
+nodescppy started...
+[ '/usr/local/bin/node',
+  '/Users/dip/dipankar/nodescrappy/bin/main.js',
+  '-u',
+  'google.com',
+  '-d',
+  'a=' ]
+Command {
+  commands: [],
+  options: 
+   [ Option {
+       flags: '-u, --url <url>',
+       required: true,
+       optional: false,
+       mandatory: false,
+       negate: false,
+       short: '-u',
+       long: '--url',
+       description: 'ex: -u http://google.com' },
+     Option {
+       flags: '-d, --data <data>',
+       required: true,
+       optional: false,
+       mandatory: false,
+       negate: false,
+       short: '-d',
+       long: '--data',
+       description: 'ex: -d text=>.a' },
+     Option {
+       flags: '-l, --link <line_number>',
+       required: true,
+       optional: false,
+       mandatory: false,
+       negate: false,
+       short: '-l',
+       long: '--link',
+       description: 'It will execute that number only.' } ],
+  _execs: Set {},
+  _allowUnknownOption: false,
+  _args: [],
+  _name: 'main',
+  _helpFlags: '-h, --help',
+  _helpDescription: 'output usage information',
+  _helpShortFlag: '-h',
+  _helpLongFlag: '--help',
+  Command: 
+   { [Function: Command]
+     super_: 
+      { [Function: EventEmitter]
+        EventEmitter: [Circular],
+        usingDomains: false,
+        defaultMaxListeners: [Getter/Setter],
+        init: [Function],
+        listenerCount: [Function] } },
+  Option: [Function: Option],
+  CommanderError: [Function: CommanderError],
+  _events: 
+   { 'option:url': [Function],
+     'option:data': [Function],
+     'option:link': [Function] },
+  _eventsCount: 3,
+  rawArgs: 
+   [ '/usr/local/bin/node',
+     '/Users/dip/dipankar/nodescrappy/bin/main.js',
+     '-u',
+     'google.com',
+     '-d',
+     'a=' ],
+  url: 'google.com',
+  data: 'a=',
+  args: [] }
