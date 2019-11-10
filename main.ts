@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var rp = require('request-promise');
 import * as fs from 'fs';
 var cheerio = require('cheerio'); 
