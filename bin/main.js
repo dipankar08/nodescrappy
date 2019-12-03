@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -35,10 +35,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 var rp = require('request-promise');
-var fs = require("fs");
-var cheerio = require('cheerio');
+//import * as fs from 'fs';
+var fs = require('fs');
+var cheerio1 = require('cheerio');
 var program = require('commander');
 program
     .option('-l, --list <list>', 'URL for list data')
@@ -97,7 +97,7 @@ function findAllDataEntry(url, selector) {
                     _a.trys.push([0, 2, , 3]);
                     console.log("[INFO] Fetching " + url + " ...");
                     return [4 /*yield*/, rp.get({ url: url, transform: function (body) {
-                                return cheerio.load(body);
+                                return cheerio1.load(body);
                             } })];
                 case 1:
                     $ = _a.sent();
@@ -129,7 +129,7 @@ function findAllImage(url, selector) {
                     _a.trys.push([0, 2, , 3]);
                     console.log("[INFO] Downlading " + url + " ...");
                     return [4 /*yield*/, rp.get({ url: url, transform: function (body) {
-                                return cheerio.load(body);
+                                return cheerio1.load(body);
                             } })];
                 case 1:
                     $ = _a.sent();
@@ -146,7 +146,7 @@ function findAllImage(url, selector) {
                     e_3 = _a.sent();
                     console.log(e_3);
                     return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
+                case 3: return [2 /*return*/, []];
             }
         });
     });

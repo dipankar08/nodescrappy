@@ -1,9 +1,11 @@
+#!/usr/bin/env node
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -35,9 +37,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var rp = require('request-promise');
+var rp = require("request-promise");
 var fs = require("fs");
-var cheerio = require('cheerio');
+//const fs = require('fs')
+var cheerio1 = require('cheerio');
+var program = require('commander');
+program
+    .option('-l, --list <list>', 'URL for list data')
+    .option('-d, --download URL <data>', 'give url for download')
+    .option('-s, --selector <selector>', 'It will execute that number only.')
+    .option('-h, --help ', "get helps and sample command.")
+    .parse(process.argv);
+console.log(program);
+// downloadg
+if (program.help) {
+    console.log(" \n    \n    !!!! With this program we support some basic ops like: !!!!\n\n    a) Download image with just a line:\n    nodescrapy -d https://m.dailyhunt.in/news/india/bangla-newspapers -s \".thumb2 li img\"\n\n    a) Enlist data from a website:\n    nodescrapy -l https://m.dailyhunt.in/news/india/bangla-newspapers -s \".thumb2 li img@src\"\n\n    ");
+}
+if (program.download) {
+    if (!program.selector) {
+        console.log("Please pass the selector to download data");
+    }
+    console.log('download started');
+    download(program.download, program.selector);
+}
+else if (program.list) {
+    if (!program.selector) {
+        console.log("Please pass the selector to list data");
+    }
+    console.log('download started');
+    findAllDataEntry(program.list, program.selector);
+}
 function downloadImg(url, filename) {
     return __awaiter(this, void 0, void 0, function () {
         var res, buffer, e_1;
@@ -61,18 +90,56 @@ function downloadImg(url, filename) {
         });
     });
 }
-function findAllImage(url, selector) {
+function findAllDataEntry(url, selector) {
     return __awaiter(this, void 0, void 0, function () {
-        var $, data, e_2;
+        var $, sa_1, data, e_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    console.log("[INFO] Downlading " + url + " ...");
+                    console.log("[INFO] Fetching " + url + " ...");
                     return [4 /*yield*/, rp.get({ url: url, transform: function (body) {
-                                return cheerio.load(body);
+                                return cheerio1.load(body);
                             } })];
                 case 1:
+                    $ = _a.sent();
+                    sa_1 = selector.split("@");
+                    data = $(sa_1[0]).toArray().forEach(function (x) {
+                        if (x.attribs) {
+                            console.log(x.attribs[sa_1[1]]);
+                        }
+                        else {
+                            console.log('.');
+                        }
+                    });
+                    return [3 /*break*/, 3];
+                case 2:
+                    e_2 = _a.sent();
+                    console.log(e_2);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+function findAllImage(url, selector) {
+    return __awaiter(this, void 0, void 0, function () {
+        var data1, $, data, e_3;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 3, , 4]);
+                    console.log("[INFO] Downlading " + url + " ...");
+                    return [4 /*yield*/, rp.get({ "uri": 'http://prasarbharati.gov.in/' })];
+                case 1:
+                    data1 = _a.sent();
+                    console.log(data1);
+                    return [4 /*yield*/, rp.get({ url: url, headers: {
+                                'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36'
+                            }, transform: function (body) {
+                                return cheerio1.load(body);
+                            } })];
+                case 2:
                     $ = _a.sent();
                     data = $(selector).toArray().map(function (x) {
                         if (x.attribs) {
@@ -83,17 +150,17 @@ function findAllImage(url, selector) {
                         }
                     });
                     return [2 /*return*/, data];
-                case 2:
-                    e_2 = _a.sent();
-                    console.log(e_2);
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
+                case 3:
+                    e_3 = _a.sent();
+                    console.log(e_3);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/, []];
             }
         });
     });
 }
 //download('https://www.google.com/images/srpr/logo3w.png', 'google.png')
-function download() {
+function download(url, selector) {
     return __awaiter(this, void 0, void 0, function () {
         var dir, list;
         var _this = this;
@@ -104,9 +171,10 @@ function download() {
                     if (!fs.existsSync(dir)) {
                         fs.mkdirSync(dir);
                     }
-                    return [4 /*yield*/, findAllImage("https://m.dailyhunt.in/news/india/bangla-newspapers", ".thumb2 li img")];
+                    return [4 /*yield*/, findAllImage(url, selector)]; //"",)
                 case 1:
-                    list = _a.sent();
+                    list = _a.sent() //"",)
+                    ;
                     list.forEach(function (element) { return __awaiter(_this, void 0, void 0, function () {
                         return __generator(this, function (_a) {
                             downloadImg(element.url, "./tmp/" + element.filename);
@@ -118,5 +186,6 @@ function download() {
         });
     });
 }
-download();
+download('http://prasarbharati.gov.in/liveradio.php', '.gallery-item .attachment-thumbnail@src');
+//download()
 //# sourceMappingURL=main.js.map

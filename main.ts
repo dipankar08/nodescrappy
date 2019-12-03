@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-var rp = require('request-promise');
+import * as rp from "request-promise";
 import * as fs from 'fs';
-var cheerio = require('cheerio'); 
+//const fs = require('fs')
+var cheerio1 = require('cheerio'); 
 var program = require('commander');
 
 program
@@ -43,7 +44,7 @@ else if(program.list){
 }
 
 
-async function downloadImg(url:string, filename:string){
+async function downloadImg(url, filename){
     try{
         console.log(`[INFO] Downlading ${url} ...`)
         let res = await rp.get({url:url,encoding: null})
@@ -57,7 +58,7 @@ async function findAllDataEntry(url, selector){
     try{
         console.log(`[INFO] Fetching ${url} ...`)
         let $  = await rp.get({url:url,transform: function (body) {
-            return cheerio.load(body);
+            return cheerio1.load(body);
         }})
         let sa = selector.split("@")
         let data = $(sa[0]).toArray().forEach(x=>{
@@ -72,11 +73,16 @@ async function findAllDataEntry(url, selector){
     }
 }
 
-async function findAllImage(url, selector):Promise<Array<any>>{
+async function findAllImage(url:string, selector:string):Promise<Array<any>>{
     try{
         console.log(`[INFO] Downlading ${url} ...`)
-        let $  = await rp.get({url:url,transform: function (body) {
-            return cheerio.load(body);
+        let data1 = await rp.get({"uri":'http://prasarbharati.gov.in/'});
+        console.log(data1);
+
+        let $  = await rp.get({url:url, headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36'
+          },transform: function (body) {
+            return cheerio1.load(body);
         }})
         let data = $(selector).toArray().map(x=>{
             if(x.attribs){
@@ -89,6 +95,7 @@ async function findAllImage(url, selector):Promise<Array<any>>{
     } catch(e){
         console.log(e)
     }
+    return []
 }
 //download('https://www.google.com/images/srpr/logo3w.png', 'google.png')
 async function download(url, selector){
@@ -101,5 +108,5 @@ async function download(url, selector){
         downloadImg(element.url, "./tmp/"+element.filename)
     });
 }
-
+download('http://prasarbharati.gov.in/liveradio.php', '.gallery-item .attachment-thumbnail@src')
 //download()

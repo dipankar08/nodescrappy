@@ -18,6 +18,7 @@
   "homepage": "https://github.com/dipankar08/nodescrappy#readme",
   "dependencies": {
     "@types/cheerio": "^0.22.13",
+    "@types/request-promise": "^4.1.44",
     "cheerio": "^1.0.0-rc.3",
     "commander": "^4.0.0",
     "fs": "0.0.1-security",
@@ -30,5 +31,6 @@
   },
   "bin": {
     "nodescrappy": "bin/main.js"
-  }
+  },
+  "type": "module"
 }
